@@ -15,7 +15,7 @@ Inside VS, its the Task Runner Explorer that enables all this. Based on the grun
 From gruntfile.js, new tasks that combine other tasks can also be created easily. So this is really a huge step forward for working with frontend stuff.
 
 
-[Task Runner and NPM Install in VS.](https://aialqq-bn1305.files.1drv.com/y2pBDOk-sxJy3YCTLorb_ng2FPML1gl-LZrRM56AG3Kz_uCvHEpVZStuGqa688N3nr9KYVZ-sGNfvIl86O7uldOiv8KEKgRVUD68YZnRA22q2Y/grunt-npm-vs2013-integration.png?psid=1)
+![Task Runner and NPM Install in VS.](https://aialqq-bn1305.files.1drv.com/y2pBDOk-sxJy3YCTLorb_ng2FPML1gl-LZrRM56AG3Kz_uCvHEpVZStuGqa688N3nr9KYVZ-sGNfvIl86O7uldOiv8KEKgRVUD68YZnRA22q2Y/grunt-npm-vs2013-integration.png?psid=1)
 
 ##Next Step
 The next step is ofcause to finish my control for ol3 and try a few more features that has now been enabled for me by these tools. One I am most interested in right now is the https://github.com/DefinitelyTyped/tsd project.
