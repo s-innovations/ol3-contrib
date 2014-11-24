@@ -1,0 +1,13 @@
+﻿{
+    "name": "Ol3-Legend-Control",
+    "description": "A legend control for OpenLayers 3",
+    "version": "1.0.0",
+
+    "devDependencies": {
+        "typescript": "1.3.0",
+        "grunt": "0.4.5",
+        "grunt-contrib-watch": "0.6.1",
+        "grunt-typescript": "0.4.4"
+    }
+
+}
