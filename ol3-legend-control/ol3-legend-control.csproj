@@ -21,10 +21,13 @@
     <Content Include="Gruntfile.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="main.js" />
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\color.ts" />
     <TypeScriptCompile Include="src\ol3-legend-control.ts" />
+    <TypeScriptCompile Include="typings\ol.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.md" />

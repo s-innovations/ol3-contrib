@@ -1,0 +1,6 @@
+﻿
+
+class Color {
+
+}
+export = Color;
