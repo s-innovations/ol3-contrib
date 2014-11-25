@@ -19,12 +19,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Gruntfile.js" />
-    <Content Include="src\ol3-legend-control.css">
-      <DependentUpon>ol3-legend-control.less</DependentUpon>
-    </Content>
-    <Content Include="src\ol3-legend-control.min.css">
-      <DependentUpon>ol3-legend-control.css</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="main.js" />
@@ -41,11 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\ol3-legend-control.less" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="src\ol3-legend-control.css.map">
-      <DependentUpon>ol3-legend-control.css</DependentUpon>
-    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
