@@ -26,7 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\color.ts" />
-    <TypeScriptCompile Include="src\ol3-legend-control.ts" />
+    <TypeScriptCompile Include="src\LegendControl.ts" />
     <TypeScriptCompile Include="typings\ol.d.ts" />
   </ItemGroup>
   <ItemGroup>
