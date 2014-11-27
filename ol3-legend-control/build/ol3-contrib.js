@@ -456,6 +456,37 @@ define('openLayers',[],function () {
     return (typeof ol !== 'undefined') ? ol : __throwMissing('openLayers', 'ol')
 }
 });
+define('ol3-info-control',['require', 'exports', 'module', 'exports', 'openLayers'], function (require, exports, module, exports, ol) {
+  
+
+var InfoControl = function (_super) {
+    __extends(InfoControl, _super);
+    function InfoControl(opt_options) {
+      if (opt_options === void 0) {
+        opt_options = {};
+      }
+      _super.call(this, {
+        element: this.createElement(),
+        target: opt_options.target
+      });
+    }
+    InfoControl.prototype.createElement = function () {
+      this.element = document.createElement("div");
+      this.element.setAttribute("class", "ol-info ol-control");
+      return this.element;
+    };
+    InfoControl.prototype.setText = function (str) {
+      this.element.innerText = str;
+    };
+    InfoControl.prototype.setMap = function (map) {
+      ol.control.Control.prototype.setMap.call(this, map);
+    };
+    return InfoControl;
+  }(ol.control.Control);
+  return InfoControl;
+
+
+});
 define('jquery',[],function () {
   if (__isNode) {
   return __nodeRequire('jquery');
@@ -466,83 +497,91 @@ define('jquery',[],function () {
 define('ol3-legend-control',['require', 'exports', 'module', 'exports', 'openLayers', 'jquery'], function (require, exports, module, exports, ol, $) {
   
 
+var LegendControl = function (_super) {
+    __extends(LegendControl, _super);
+    function LegendControl(opt_options) {
+      var _this = this;
+      _super.call(this, {
+        element: this.createElement(),
+        target: opt_options.target
+      });
+      this.maxValue = Number.MIN_VALUE;
+      this.minValue = Number.MAX_VALUE;
+      this.options = opt_options;
+      this.options.steps.forEach(function (step) {
+        if (step.value < _this.minValue)
+          _this.minValue = step.value;
+        if (step.value > _this.maxValue)
+          _this.maxValue = step.value;
+        if (typeof step.showMarker === "undefined")
+          step.showMarker = true;
+      });
+    }
+    LegendControl.prototype.createElement = function () {
+      this.element = document.createElement("div");
+      this.element.setAttribute("class", "ol-legend ol-control");
+      return this.element;
+    };
+    LegendControl.prototype.setMap = function (map) {
+      var _this = this;
+      ol.control.Control.prototype.setMap.call(this, map);
+      console.log($(this.element).innerHeight());
+      this.legendCanvas = document.createElement("canvas");
+      this.element.appendChild(this.legendCanvas);
+      this.legendCanvas.width = this.legendCanvas.offsetWidth;
+      this.legendCanvas.height = this.options.gradientHeight || this.legendCanvas.offsetHeight;
+      var ctx = this.legendCanvas.getContext("2d");
+      ctx.font = "16px Georgia";
+      var gradientWidth = this.options.gradientWidth || 20;
+      var gradientOffset = 10;
+      var gradientHeight = this.legendCanvas.height - gradientOffset * 2;
+      var left = false;
+      var maxSize = Number.MIN_VALUE;
+      var lingrad = ctx.createLinearGradient(0, 0, 0, gradientHeight);
+      this.options.steps.forEach(function (step) {
+        var pos = 1 - step.value / (_this.maxValue - _this.minValue);
+        lingrad.addColorStop(pos, step.color);
+        if (step.showMarker) {
+          ctx.beginPath();
+          ctx.moveTo(gradientOffset + (left ? 0 : gradientWidth), gradientOffset + pos * gradientHeight);
+          ctx.lineTo(gradientOffset + (left ? 0 : gradientWidth) + (left ? -10 : 10), gradientOffset + pos * gradientHeight);
+          ctx.stroke();
+          var text = step.text || step.value.toString();
+          if (text.length > maxSize)
+            maxSize = text.length;
+          ctx.fillText(text, gradientOffset + (left ? 0 : gradientWidth) + (left ? -10 : 10) + 2, gradientOffset + pos * gradientHeight + 4);
+        }
+      });
+      ctx.fillStyle = lingrad;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "black";
+      ctx.fillRect(gradientOffset, gradientOffset, gradientWidth, gradientHeight);
+      ctx.strokeRect(gradientOffset, gradientOffset, gradientWidth, gradientHeight);
+      this.element.style.width = gradientWidth + 2 * gradientOffset + 10 + maxSize * 8 + "px";
+      this.element.style.height = gradientHeight + 2 * gradientOffset + "px";
+    };
+    return LegendControl;
+  }(ol.control.Control);
+  exports.LegendControl = LegendControl;
+
+
+});
+define('ol3-contrib',['require', 'exports', 'module', 'exports', './ol3-info-control', './ol3-legend-control'], function (require, exports, module, exports, InfoControlExtern, LegendControlExtern) {
+  
+
 var ol3Contrib;
   (function (ol3Contrib) {
     var controls;
     (function (controls) {
-      var LegendControl = function (_super) {
-        __extends(LegendControl, _super);
-        function LegendControl(opt_options) {
-          var _this = this;
-          _super.call(this, {
-            element: this.createElement(),
-            target: opt_options.target
-          });
-          this.maxValue = Number.MIN_VALUE;
-          this.minValue = Number.MAX_VALUE;
-          this.options = opt_options;
-          this.options.steps.forEach(function (step) {
-            if (step.value < _this.minValue)
-              _this.minValue = step.value;
-            if (step.value > _this.maxValue)
-              _this.maxValue = step.value;
-            if (typeof step.showMarker === "undefined")
-              step.showMarker = true;
-          });
-        }
-        LegendControl.prototype.createElement = function () {
-          this.element = document.createElement("div");
-          this.element.setAttribute("class", "ol-legend ol-control");
-          return this.element;
-        };
-        LegendControl.prototype.setMap = function (map) {
-          var _this = this;
-          ol.control.Control.prototype.setMap.call(this, map);
-          console.log($(this.element).innerHeight());
-          this.legendCanvas = document.createElement("canvas");
-          this.element.appendChild(this.legendCanvas);
-          this.legendCanvas.width = this.legendCanvas.offsetWidth;
-          this.legendCanvas.height = this.options.gradientHeight || this.legendCanvas.offsetHeight;
-          var ctx = this.legendCanvas.getContext("2d");
-          ctx.font = "16px Georgia";
-          var gradientWidth = this.options.gradientWidth || 20;
-          var gradientOffset = 10;
-          var gradientHeight = this.legendCanvas.height - gradientOffset * 2;
-          var left = false;
-          var maxSize = Number.MIN_VALUE;
-          var lingrad = ctx.createLinearGradient(0, 0, 0, gradientHeight);
-          this.options.steps.forEach(function (step) {
-            var pos = 1 - step.value / (_this.maxValue - _this.minValue);
-            lingrad.addColorStop(pos, step.color);
-            if (step.showMarker) {
-              ctx.beginPath();
-              ctx.moveTo(gradientOffset + (left ? 0 : gradientWidth), gradientOffset + pos * gradientHeight);
-              ctx.lineTo(gradientOffset + (left ? 0 : gradientWidth) + (left ? -10 : 10), gradientOffset + pos * gradientHeight);
-              ctx.stroke();
-              var text = step.text || step.value.toString();
-              if (text.length > maxSize)
-                maxSize = text.length;
-              ctx.fillText(text, gradientOffset + (left ? 0 : gradientWidth) + (left ? -10 : 10) + 2, gradientOffset + pos * gradientHeight + 4);
-            }
-          });
-          ctx.fillStyle = lingrad;
-          ctx.lineWidth = 1;
-          ctx.strokeStyle = "black";
-          ctx.fillRect(gradientOffset, gradientOffset, gradientWidth, gradientHeight);
-          ctx.strokeRect(gradientOffset, gradientOffset, gradientWidth, gradientHeight);
-          this.element.style.width = gradientWidth + 2 * gradientOffset + 10 + maxSize * 8 + "px";
-          this.element.style.height = gradientHeight + 2 * gradientOffset + "px";
-        };
-        return LegendControl;
-      }(ol.control.Control);
-      controls.LegendControl = LegendControl;
+      controls.InfoControl = InfoControlExtern;
+      controls.LegendControl = LegendControlExtern.LegendControl;
     }(controls = ol3Contrib.controls || (ol3Contrib.controls = {})));
   }(ol3Contrib || (ol3Contrib = {})));
   return ol3Contrib;
 
 
 });
-    return require('ol3-legend-control');
+    return require('ol3-contrib');
 
 };
 if (__isAMD) {

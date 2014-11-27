@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     // Registers the default task to run the RequireJS plugin. 
     // In Terminal/Command Line you will be able to type 'grunt' and
     // this will run the 'requirejs' plugin in this file.
-    grunt.registerTask('default', ["typescript:base", 'urequire:dev', 'copy']);
+    grunt.registerTask('default', ["typescript:base", 'urequire:dev','urequire:publish', 'copy']);
 
   
 
@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         urequire: {
             _defaults: {
                 path: 'build/amd',
-                main: 'ol3-legend-control',
+                main: 'ol3-contrib',
             },
             UMD: {
                 template: 'UMDplain',
@@ -25,18 +25,18 @@ module.exports = function (grunt) {
                     //imports : { 'openLayers': 'ol' },
                     rootExports: { 'LegendControl': 'LegendControl' },
                 }
-            },
-            dev:{
+            },           
+            dev: {
                 template: 'combined',
-                dstPath: 'build/ol3-legend-control.js',
+                dstPath: 'build/ol3-contrib.js',
                 dependencies: {
-                    //imports : { 'openLayers': 'ol' },
-                    rootExports: { 'LegendControl': 'LegendControl' },
+                    // imports: { 'ol3-legend-control.ts': 'ol3-info-control.ts' },
+                    //    rootExports: { 'LegendControl': 'LegendControl' },
                 }
             },
             publish:{
-                template: 'combined',
-                dstPath: 'build/ol3-legend-control.min.js',
+                template: 'combined',                              
+                dstPath: 'build/ol3-contrib.min.js',
                 optimize: 'uglify2'
             }
         },
@@ -57,12 +57,24 @@ module.exports = function (grunt) {
         },
         copy: {
             main: {
-                src: ["build/ol3-legend-control.js"],
-                dest: 'C:/dev/ascendprojects/Ascend Azure Pipeline/Ascend.Portal.Client/Ascend.Portal.Client/libs/ol3-legend/ol3-legend-control.js'
+                src: ["build/ol3-contrib.js"],
+                dest: 'C:/dev/ascendprojects/Ascend Azure Pipeline/Ascend.Portal.Client/Ascend.Portal.Client/libs/ol3-legend/ol3-contrib.js'
+            },
+            main1: {
+                src: ["build/ol3-contrib.min.js"],
+                dest: 'C:/dev/ascendprojects/Ascend Azure Pipeline/Ascend.Portal.Client/Ascend.Portal.Client/libs/ol3-legend/ol3-contrib.min.js'
             },
             tsdef: {
                 src: ["build/amd/ol3-legend-control.d.ts"],
                 dest: 'C:/dev/ascendprojects/Ascend Azure Pipeline/Ascend.Portal.Client/Ascend.Portal.Client/libs/ol3-legend/ol3-legend-control.d.ts'
+            },
+            tsdef1: {
+                src: ["build/amd/ol3-info-control.d.ts"],
+                dest: 'C:/dev/ascendprojects/Ascend Azure Pipeline/Ascend.Portal.Client/Ascend.Portal.Client/libs/ol3-legend/ol3-info-control.d.ts'
+            },
+            tsdef2: {
+                src: ["build/amd/ol3-contrib.d.ts"],
+                dest: 'C:/dev/ascendprojects/Ascend Azure Pipeline/Ascend.Portal.Client/Ascend.Portal.Client/libs/ol3-legend/ol3-contrib.d.ts'
             },
             css: {
                 src: ["src/ol3-legend-control.less"],

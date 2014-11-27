@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ol3-legend-control", "ol3-legend-control\ol3-legend-control.csproj", "{828CE32B-0ACD-4537-9DB2-80EA3B249A77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ol3-contrib", "ol3-legend-control\ol3-contrib.csproj", "{828CE32B-0ACD-4537-9DB2-80EA3B249A77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

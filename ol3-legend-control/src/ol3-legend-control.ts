@@ -6,8 +6,8 @@ import $ = require("jquery");
 
 
 
- module ol3Contrib {
-    export module controls {
+ //module ol3Contrib {
+  //  export module controls {
 
         export interface LegendControlOptions {
             target? ;
@@ -113,7 +113,7 @@ import $ = require("jquery");
         //ol.control.Control = LegendControl;
         //export = LegendControl;
 
-    }
-}
+//    }
+//}
 
-export =ol3Contrib;
+//export =ol3Contrib;
